@@ -1,0 +1,56 @@
+{
+  "mask": {
+    "maskPolicies": [
+    {
+        "description": "this entry will mask field except last 4 characters for LOG",
+        "maskType": "LOG",
+        "maskRegex": {
+          "pattern": "(.*).(?!.{0,3}$)",
+          "replacement": "*****"
+        },
+        "maskFields": [
+          "*.imei",
+          "*.serial",
+          "*.mac",
+          "*client_id*",
+          "*client_secret*",
+        ]
+      },
+      {
+        "description": "this entry will mask field all characters for LOG",
+        "maskType": "LOG",
+        "maskRegex": {
+          "pattern": "(.*).",
+          "replacement": "*****"
+        },
+        "maskFields": [
+            "*email*",
+            "*fullName*",
+            "*.recipient.name",
+            "*registration.receipt.data",
+            "*user.name.first",
+            "*user.name.last",
+            "*address*",
+            "*Address*",
+            "*dob*", 
+            "*first_name*",
+            "*last_name*", 
+            "*program.rewards",
+            "*program.tiersDescription.tiers",
+        ]
+      },
+      {
+        "description": "this entry will mask field with imei,email,mac",
+        "maskType": "LOG",
+        "maskRegex": {
+          "pattern": "(imei|email|mac)=([^&]{0,4})([^&]+)",
+          "replacement": "$1=$2$3"
+        },
+        "maskFields": [
+            "*eventType*",
+            "*.request.url",
+        ]
+      }
+    ]
+  }
+}

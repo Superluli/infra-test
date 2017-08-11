@@ -1,0 +1,25 @@
+{
+    "app.kafka.config": {
+        "consumerConfig": {
+            "group.id": "promotion_platform",
+            "zookeeper.connect": "ec2-54-237-107-63.compute-1.amazonaws.com:2181"
+        },
+        "topics": [
+            {
+                "messageProcessor": "messageProcessorApiServerImpl",
+                "name": "trs.transaction.notification",
+                "numOfStreams": 12
+            },
+            {
+                "messageProcessor": "locationMessageProcessor",
+                "name": "prm.location.notification",
+                "numOfStreams": 12
+            },
+            {
+                "messageProcessor": "targetedPushMessageProcessor",
+                "name": "prm.targeted_push.notification",
+                "numOfStreams": 12
+            }
+        ]
+    }
+}
