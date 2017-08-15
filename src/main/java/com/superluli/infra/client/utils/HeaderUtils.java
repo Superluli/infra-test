@@ -1,4 +1,4 @@
-package com.superluli.infra.client;
+package com.superluli.infra.client.utils;
 
 import java.util.UUID;
 

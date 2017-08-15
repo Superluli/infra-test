@@ -82,11 +82,12 @@
 			<version>1.11.174</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.jodd/jodd-json -->
+		
+
 		<dependency>
-			<groupId>org.jodd</groupId>
-			<artifactId>jodd-json</artifactId>
-			<version>3.6.6</version>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>1.47</version>
 		</dependency>
 
 	</dependencies>

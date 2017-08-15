@@ -1,26 +1,13 @@
 package com.superluli.infra.app;
 
-import java.net.URISyntaxException;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLContext;
-import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.ssl.SSLContexts;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +23,6 @@ import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -51,6 +36,7 @@ import com.google.common.cache.CacheBuilder;
 import com.superluli.infra.accesslogging.AccessLoggingFilter;
 import com.superluli.infra.accesslogging.AccessLoggingService;
 import com.superluli.infra.accesslogging.EventTypeProvider;
+import com.superluli.infra.client.MyHttpClient;
 import com.superluli.infra.kafka.producer.KafkaConfiguration;
 import com.superluli.infra.kafka.producer.KafkaProducerService;
 
@@ -174,22 +160,9 @@ public class Application extends WebMvcConfigurerAdapter {
         };
     }
 
-    @Bean(name = "wsrSpringRestClient")
-    public SpringRestClient getWsrSpringRestClient() {
-        SpringRestClient springRestClient = new SpringRestClient() {
-            @Override
-            public void init() throws Exception {
-                super.init();
-                setLogger(WsrSender.logger);
-            }
-        };
-
-        return springRestClient;
-    }
-
     @Bean(name = "gcHttpClient")
-    public HttpClient gcHttpClient() {
-        return new HttpClient();
+    public MyHttpClient gcHttpClient() {
+        return new MyHttpClient();
     }
 
     @Bean

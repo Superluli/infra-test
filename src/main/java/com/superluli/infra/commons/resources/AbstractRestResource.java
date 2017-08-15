@@ -1,4 +1,4 @@
-package com.superluli.infra.commons;
+package com.superluli.infra.commons.resources;
 
 public abstract class AbstractRestResource {
 

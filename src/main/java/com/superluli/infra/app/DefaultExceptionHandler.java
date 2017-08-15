@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.superluli.infra.accesslogging.LoggingHttpServletRequestWrapper;
-import com.superluli.infra.commons.AbstractRestResource;
 import com.superluli.infra.commons.Constants;
+import com.superluli.infra.commons.resources.AbstractRestResource;
 import com.superluli.infra.exception.ConflictResourceException;
 import com.superluli.infra.exception.NestedServerRuntimeException;
 

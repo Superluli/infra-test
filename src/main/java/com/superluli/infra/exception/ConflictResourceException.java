@@ -2,7 +2,7 @@ package com.superluli.infra.exception;
 
 import org.springframework.http.HttpStatus;
 
-import com.superluli.infra.commons.AbstractRestResource;
+import com.superluli.infra.commons.resources.AbstractRestResource;
 
 
 public class ConflictResourceException extends NestedServerRuntimeException {

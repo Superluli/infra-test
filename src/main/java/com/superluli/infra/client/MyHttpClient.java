@@ -25,11 +25,13 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-public class HttpClient extends SpringRestClient {
+public class MyHttpClient extends RestTemplate {
 
     private PoolingHttpClientConnectionManager connectionManager;
 
-    public HttpClient() {
+    private Logger logger;
+    
+    public MyHttpClient() {
     	super();
     }
 
@@ -56,15 +58,11 @@ public class HttpClient extends SpringRestClient {
         requestFactory.setConnectionRequestTimeout(config.getConnectionRequestTimeout());
         requestFactory.setReadTimeout(config.getSocketReadTimeout());
 
-
-        // Overwrite springRestClient's restTemplat's settings
-        RestTemplate internalRestTemplate = getRestTemplate();
-
-        internalRestTemplate.setRequestFactory(requestFactory);
+        setRequestFactory(requestFactory);
 
         // Ignore HTTP errors, handle them in business logic codes
 
-        internalRestTemplate.setErrorHandler(new ResponseErrorHandler() {
+        setErrorHandler(new ResponseErrorHandler() {
 
             @Override
             public boolean hasError(ClientHttpResponse response) throws IOException {
@@ -75,7 +73,7 @@ public class HttpClient extends SpringRestClient {
             public void handleError(ClientHttpResponse response) throws IOException {}
         });
 
-        this.setLogger(delegateLogger);
+        this.logger = delegateLogger;
     }
 
     private Registry<ConnectionSocketFactory> configRegistry(HttpClientConfiguration config)
