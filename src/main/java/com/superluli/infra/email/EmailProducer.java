@@ -19,7 +19,7 @@ import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 
-@Service
+//@Service
 public class EmailProducer implements EmailSender {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailProducer.class);
@@ -38,18 +38,6 @@ public class EmailProducer implements EmailSender {
 
     private AmazonSimpleEmailServiceClient client;
 
-    @Value("${coupon.email.title}")
-    private String couponEmailTitle;
-
-    @Value("${coupon.email.content}")
-    private String couponEmailContent;
-
-    @Value("${rp.email.title}")
-    private String rpEmailTitle;
-
-    @Value("${rp.email.content}")
-    private String rpEmailContent;
-
     
     @PostConstruct
     public void init() throws Exception {
@@ -60,7 +48,7 @@ public class EmailProducer implements EmailSender {
         client = new AmazonSimpleEmailServiceClient();
         client.setRegion(Region.getRegion(Regions.fromName(region)));
 
-        sendRPWelcomeEmailToUser("enlian1988@gmail.com");
+        //   sendRPWelcomeEmailToUser("enlian1988@gmail.com");
     }
 
     private void sendMail(List<String> recipients, String subject, String body) {
@@ -87,21 +75,8 @@ public class EmailProducer implements EmailSender {
     }
 
     @Override
-    public void sendCouponToUser(String userEmail, String couponCode) {
+    public void sendEmail(String userEmail) {
 
-        sendMail(Arrays.asList(userEmail), couponEmailTitle,
-                couponEmailContent.replace("YYYYYYYY", couponCode));
-    }
-
-    @Override
-    public void sendRPWelcomeEmailToUser(String userEmail) {
-
-        sendMail(Arrays.asList(userEmail), rpEmailTitle, rpEmailContent);
-    }
-    
-    @Override
-    public void sendRPExternalWelcomeEmailToUser(String userEmail) {
-
-        sendMail(Arrays.asList(userEmail), rpEmailTitle, rpEmailContent);
+        sendMail(Arrays.asList(userEmail), "INFRA-TEST", "XXX");
     }
 }

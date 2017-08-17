@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@ConfigurationProperties(prefix = "app.kafka.config", locations = {"${app.kafka.config.location}",
-        "${spring.config.location}", "classpath:application.properties"})
+//@Configuration
+//@ConfigurationProperties(prefix = "app.kafka.config", locations = {"${app.kafka.config.location}",
+//        "${spring.config.location}", "classpath:application.properties"})
 public class KafkaConsumerConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerConfig.class);

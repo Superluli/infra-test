@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class MessageProcessorProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageProcessorProvider.class);

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<property name="accessLogLevel" value="INFO" />
+	<property name="outboundLogLevel" value="INFO" />
+	<property name="appLogLevel" value="DEBUG" />
+	<property name="dbAccessLogLevel" value="ERROR" />
+	<property name="springLogLevel" value="INFO" />
+	<property name="httpLogLevel" value="ERROR" />
+    <property name="cacheLogLevel" value="DEBUG" />
+
+	<property name="consolePattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg%n" />
+
+	<property name="filePattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg%n" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${consolePattern}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${filePattern}</pattern>
+		</encoder>
+		<file>/log/infra-test.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<minIndex>1</minIndex>
+			<maxIndex>100</maxIndex>
+			<fileNamePattern>/log/infra-test.log.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+
+	</appender>
+
+	<logger name="com.superluli.infra.accesslogging"
+		level="${accessLogLevel}" additivity="true" />
+
+	<logger name="com.superluli.infra.client"
+		level="${outboundLogLevel}" additivity="true" />
+
+	<logger name="com.superluli.infra.jpa.RepositoryLoggingAspect" level="${dbAccessLogLevel}"
+		additivity="true" />
+
+	<logger name="com.superluli.infra" level="${appLogLevel}"
+		additivity="true" />
+
+	<logger name="org.springframework" level="${springLogLevel}"
+		additivity="true" />
+
+	<logger name="org.apache.http.wire" level="${httpLogLevel}"
+		additivity="true" />
+
+	<logger name="org.apache.http.impl" level="${httpLogLevel}"
+		additivity="true" />
+  
+    <logger name="org.springframework.cache" level="${cacheLogLevel}"
+        additivity="true" />
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

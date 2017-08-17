@@ -9,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@SpringBootApplication
-@ComponentScan("com.samsung.cloud.promotion.consumer, com.samsung.cloud.base")
+//@SpringBootApplication
+//@ComponentScan("com.superluli.infra.kafka")
 public class Application {
 
-    public static void main(String[] args) {
-
-        SpringApplication app = new SpringApplication(Application.class);
-        /*
-         * Do not start server
-         */
-        app.setWebEnvironment(false);
-        app.run(args);
-    }
+//    public static void main(String[] args) {
+//
+//        SpringApplication app = new SpringApplication(Application.class);
+//        /*
+//         * Do not start server
+//         */
+//        app.setWebEnvironment(false);
+//        app.run(args);
+//    }
 
     @Bean
     public ObjectMapper objectMapper() {

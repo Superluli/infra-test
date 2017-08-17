@@ -20,34 +20,35 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "promotionEntityManagerFactory", transactionManagerRef = "promotionTransactionManager", basePackages = "com.samsung.cloud.promotion.apiserver.persistence")
-public class PromotionDataSourceConfig {
+@EnableJpaRepositories(entityManagerFactoryRef = "infraTestEntityManagerFactory", transactionManagerRef = "infraTestTxnManager", basePackages = "com.superluli.infra.jpa")
+public class InfraTestDataSourceConfig {
 
 	@Autowired
 	private JpaProperties jpaProperties;
 
-	@Bean(name = "promotionDataSource")
+	
+	@Bean(name = "infraTestDataSource") // put name here to be avoid of conflicts with other data source
 	@Primary // Pull in the JPA configuration via this data source's definition.
-	@ConfigurationProperties(prefix = "app.datasource.promotion")
+	@ConfigurationProperties(prefix = "app.datasource.infraTest")
 	public DataSource promotionDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
 	@Primary
-	@Bean(name = "promotionEntityManagerFactory")
+	@Bean(name = "infraTestEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder factoryBuilder,
-			@Qualifier("promotionDataSource") DataSource fds) {
-		return factoryBuilder.dataSource(fds).packages("com.samsung.cloud.promotion.apiserver.persistence")
-				.persistenceUnit("promotionPersistenceUnit")
+			@Qualifier("infraTestDataSource") DataSource fds) {
+		return factoryBuilder.dataSource(fds).packages("com.superluli.infra.jpa")
+				.persistenceUnit("infraTestPersistenceUnit")
 				// Using Hibernate and Not using JTA. (Change the next line if
 				// your context is different.)
 				.properties(this.jpaProperties.getHibernateProperties(fds)).build();
 	}
 
 	@Primary
-	@Bean(name = "promotionTransactionManager")
+	@Bean(name = "infraTestTxnManager")
 	public PlatformTransactionManager transactionManager(
-			@Qualifier("promotionEntityManagerFactory") EntityManagerFactory factory) {
+			@Qualifier("infraTestEntityManagerFactory") EntityManagerFactory factory) {
 		return new JpaTransactionManager(factory);
 	}
 
