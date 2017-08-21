@@ -50,27 +50,6 @@ import com.superluli.infra.kafka.producer.KafkaProducerService;
 public class Application extends WebMvcConfigurerAdapter {
 
 	public static Logger logger = LoggerFactory.getLogger(Application.class);
-	
-    @Value("${executorService.corePoolSize: 200}")
-    private int executorCorePoolSize;
-
-    @Value("${executorService.maxPoolSize: 5000}")
-    private int executorMaxPoolSize;
-
-    @Value("${executorService.queueCapacity: 1000}")
-    private int executorQueueCapacity;
-    
-    @Value("${cacheService.shortTimeoutSecond: 30}")
-    private int cacheShortTimeoutSecond;
-    
-    @Value("${cacheService.longTimeoutMinute: 3}")
-    private int cacheLongTimeoutMinute;
-
-    /**
-     * This is temporary to allow api stubs
-     */
-    @Value("${promotion.thirdparty.prizelogic.clientType:default}")
-    private String prizeLogicClientType;
 
     @Bean(name = "mainTaskExecutor")
     public ThreadPoolTaskExecutor mainTaskExecutor() {
@@ -78,10 +57,10 @@ public class Application extends WebMvcConfigurerAdapter {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setThreadGroupName("mainTaskExecutor");
         executor.setThreadNamePrefix("mainTaskExecutor-");
-        executor.setCorePoolSize(executorCorePoolSize);
-        executor.setMaxPoolSize(executorMaxPoolSize);
+        executor.setCorePoolSize(200);
+        executor.setMaxPoolSize(5000);
         executor.setKeepAliveSeconds(60);
-        executor.setQueueCapacity(executorQueueCapacity);
+        executor.setQueueCapacity(1000);
         
         return executor;
     }
@@ -95,10 +74,10 @@ public class Application extends WebMvcConfigurerAdapter {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setThreadGroupName("nonCriticalTaskExecutor");
         executor.setThreadNamePrefix("nonCriticalTaskExecutor-");
-        executor.setCorePoolSize(executorCorePoolSize);
-        executor.setMaxPoolSize(executorMaxPoolSize);
+        executor.setCorePoolSize(200);
+        executor.setMaxPoolSize(5000);
         executor.setKeepAliveSeconds(60);
-        executor.setQueueCapacity(executorQueueCapacity);
+        executor.setQueueCapacity(1000);
 		executor.setRejectedExecutionHandler(new RejectedExecutionHandler() {
 			@Override
 			public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) { 
@@ -135,15 +114,10 @@ public class Application extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean getAccessLogFilterRegistrationBean() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         AccessLoggingFilter accessLogFilter = new AccessLoggingFilter();
-        accessLogFilter.setLoggingService(accessLoggingService());
+        accessLogFilter.setLoggingService(new AccessLoggingService());
         registration.setOrder(9999);
         registration.setFilter(accessLogFilter);
         return registration;
-    }
-
-    @Bean
-    public AccessLoggingService accessLoggingService() {
-        return new AccessLoggingService();
     }
 
     @Bean(name = "accessLoggingEventTypeProvider")
@@ -160,8 +134,8 @@ public class Application extends WebMvcConfigurerAdapter {
         };
     }
 
-    @Bean(name = "gcHttpClient")
-    public MyHttpClient gcHttpClient() {
+    @Bean(name = "myHttpClient")
+    public MyHttpClient myHttpClient() {
         return new MyHttpClient();
     }
 
@@ -190,7 +164,7 @@ public class Application extends WebMvcConfigurerAdapter {
         GuavaCacheManager cacheManager = new GuavaCacheManager();
         CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder()
                 .maximumSize(100)
-                .expireAfterWrite(cacheLongTimeoutMinute, TimeUnit.MINUTES);
+                .expireAfterWrite(10, TimeUnit.SECONDS);
         cacheManager.setCacheBuilder(cacheBuilder);
         return cacheManager;
     }

@@ -1,6 +1,6 @@
 package com.superluli.infra.rest;
 
-import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,15 +26,16 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserModel getUserById(@PathVariable("userId") String userId) {
+	public UserModel getUserById(@PathVariable("userId") String id) {
 
-		return new UserModel("xxx");
+		return userService.getUserById(id);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public IndexBasedRestResourceList<UserModel> queryUsersByName(@RequestParam("name") String name) {
 
-		return new IndexBasedRestResourceList<UserModel>(null, null, null, 0, 0, Arrays.asList(new UserModel("xxx")));
+		List<UserModel> users = userService.queryUsersByName(name);
+		return new IndexBasedRestResourceList<UserModel>(null, null, null, 0, users.size(), users);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -8,7 +8,7 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.superluli.infra.commons.JsonUtil;
+import com.superluli.infra.commons.utils.JsonUtil;
 
 public class NodeSerializer implements Serializer<ObjectNode> {
 

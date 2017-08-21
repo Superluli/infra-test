@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.superluli.infra.commons.CommonUtils;
 import com.superluli.infra.commons.Constants;
+import com.superluli.infra.commons.utils.CommonUtils;
 
 public class AccessLoggingFilter implements Filter {
 	

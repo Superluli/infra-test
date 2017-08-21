@@ -1,4 +1,4 @@
-package com.superluli.infra.commons;
+package com.superluli.infra.commons.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

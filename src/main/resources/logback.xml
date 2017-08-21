@@ -4,7 +4,7 @@
 	<property name="accessLogLevel" value="INFO" />
 	<property name="outboundLogLevel" value="INFO" />
 	<property name="appLogLevel" value="DEBUG" />
-	<property name="dbAccessLogLevel" value="ERROR" />
+	<property name="dbAccessLogLevel" value="DEBUG" />
 	<property name="springLogLevel" value="INFO" />
 	<property name="httpLogLevel" value="ERROR" />
     <property name="cacheLogLevel" value="DEBUG" />

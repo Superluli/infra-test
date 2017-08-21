@@ -166,7 +166,8 @@ public class AccessLoggingService {
 	private String getEventType(LoggingHttpServletRequestWrapper request) {
 
 		if (eventTypeProvider == null) {
-			return "UNKOWN";
+			//default 
+			return request.getRequestURI();
 		} else {
 			return eventTypeProvider.getEventType(request);
 		}
